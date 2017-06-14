@@ -70,7 +70,9 @@ public class MailService {
 			// Now set the actual message
 			message.setText(textMessage);
 
-			messageBodyPart.setContent(readTemplate(), "text/html");
+			String template = readTemplate("Alex Test", "bla@bla.com");
+
+			messageBodyPart.setContent(template, "text/html");
 			multipart.addBodyPart(messageBodyPart);
 			message.setContent(multipart);
 
@@ -82,22 +84,29 @@ public class MailService {
 		}
 	}
 
+	/**
+	 * Templates in the page
+	 */
+	private final  static String TEMPLATE_EMAIL = "TEMPLATE_EMAIL";
+	private final  static String TEMPLATE_NAME = "TEMPLATE_NAME";
 
 	/**
 	 * Read the template from the resource folder
 	 * template url: https://beefree.io/
 	 */
-	private String readTemplate() {
+	private String readTemplate(String name, String email) {
 
 		byte[] encoded = new byte[0];
 
 		try {
-			encoded = Files.readAllBytes(Paths.get(getClass().getClassLoader().getResource("templete_complete_form_sign_up.html").getPath()));
+			encoded = Files.readAllBytes(Paths.get(getClass().getClassLoader().getResource("template_complete_form_sign_up.html").getPath()));
 		} catch (IOException ex) {
 			System.out.println("UserController | readTemplate (....) | message: messageError send email | exception: " + ex);
 		}
 
-		return new String(encoded, Charset.defaultCharset());
+		String template = new String(encoded, Charset.defaultCharset());
+
+		return template.replace(TEMPLATE_EMAIL, email).replace(TEMPLATE_NAME, name);
 	}
 
 }
