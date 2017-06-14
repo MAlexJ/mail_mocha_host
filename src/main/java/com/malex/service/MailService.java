@@ -85,13 +85,14 @@ public class MailService {
 
 	/**
 	 * Read the template from the resource folder
+	 * template url: https://beefree.io/
 	 */
 	private String readTemplate() {
 
 		byte[] encoded = new byte[0];
 
 		try {
-			encoded = Files.readAllBytes(Paths.get(getClass().getClassLoader().getResource("template_sign_in.html").getPath()));
+			encoded = Files.readAllBytes(Paths.get(getClass().getClassLoader().getResource("templete_complete_form_sign_up.html").getPath()));
 		} catch (IOException ex) {
 			System.out.println("UserController | readTemplate (....) | message: messageError send email | exception: " + ex);
 		}
